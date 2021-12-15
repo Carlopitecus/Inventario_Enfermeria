@@ -28,6 +28,11 @@ myModal2.addEventListener('shown.bs.modal', function () {
     myInput2.focus()
 })
 
+// Se identifica al elemento por su Uid y se elimina
+const deleteElemento = (uid) => {
+    firebase.database().ref(`elementos/${uid}`).remove()
+  }
+
 // Despliegue de los datos que estan en firebase
 window.addEventListener('DOMContentLoaded', async (e) => {
     await elementRef.on('value', (elementos) => {
@@ -96,15 +101,23 @@ window.addEventListener('DOMContentLoaded', async (e) => {
 
             // Se identifica al boton con la clase danger
             const deleteButtons = document.querySelectorAll('.btn-danger')
+            console.log(deleteButtons)
 
             // por cada boton Danger, al hacer click, busca el id del elemento
             deleteButtons.forEach((button) => {
                 button.addEventListener('click', (e) => {
+                    console.log(e)
                     deleteElemento(e.target.dataset.id)
-                    console.log(e.target.dataset.id)
                 })
             })
-        });
+            // deleteButtons.forEach((button) => {
+            //     button.addEventListener('click', (e) => {
+            //         console.log(e.target.dataset.id)
+            //         deleteElemento(e.target.dataset.id)
+                    
+            //     })
+            // })
+        })
     })
 })
 
